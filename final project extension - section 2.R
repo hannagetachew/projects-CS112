@@ -12,7 +12,7 @@ X <- cbind(final_com$age,final_com$black,final_com$hispanic,final_com$two_parent
 
 Tr<- final_com$female
 Y<- final_com$suicide
-genout<-GenMatch(Tr=Tr, X=X,BalanceMatrix=X, estimand="ATT", M=1,pop.size = 100, max.generations=100,
+genout<-GenMatch(Tr=Tr, X=X,BalanceMatrix=X, estimand="ATT", M=1,pop.size = 200, max.generations=100,
                  wait.generations=4)
 mout<-Match(Tr=Tr, X=X, estimand = "ATT", Weight.matrix = genout)
 summary(mout)
@@ -26,16 +26,10 @@ mout_ii<- Match(Y=final_com$suicide,Tr=Tr, X=X, estimand = "ATT", Weight.matrix 
 summary(mout_ii)
 
 
-
-#sa_control<- final_com$sub_abuse[which(final_com$sub_abuse == 0)]
-#sa_treat<- final_com$sub_abuse[which(final_com$sub_abuse != 0)]
-final_com$sub_abuse[which(final_com$sub_abuse!=0)]<-1
-
+#final_com$sub_abuse[which(final_com$sub_abuse!=0)]<-1
 
 
 ###PARTII-FOR SUBSTANCE ABUSE
-
-
 
 
 
@@ -45,7 +39,7 @@ X2 <- cbind(final_com$female,final_com$age,final_com$black,final_com$hispanic,fi
 
 Tr2<- final_com$sub_abuse
 Y<- final_com$suicide
-genout2<-GenMatch(Tr=Tr2, X=X2,BalanceMatrix=X, estimand="ATT", M=1,pop.size = 100, max.generations=100,
+genout2<-GenMatch(Tr=Tr2, X=X2,BalanceMatrix=X, estimand="ATT", M=1,pop.size = 200, max.generations=100,
                  wait.generations=4)
 mout2<-Match(Tr=Tr2, X=X2, estimand = "ATT", Weight.matrix = genout2)
 summary(mout2)
@@ -64,46 +58,6 @@ psens(mout_ii)
 
 psens(mout2_ii)
 
-# identify and store "age" for the matched treated and control groups
-#female_suicide <- final_com$suicide[mout2$index.treated]
-
-#male_suicide <- final_com$suicide[mout2$index.control]
-
-
-# draw the distributions
-
-#plot(density(female_suicide),ylim = c(0, 10),col = "red", main = ("female and male sucide density"),legend(0.7,6,c("female","male"),lty=c(1,1),lwd=c(2.5,2.5),col=c("red","blue")))
-
-#lines(density(male_suicide ), col = "blue", lwd = 2)
-
-
-#legend(2000,9.5, # places a legend at the appropriate place c("Health","Defense"), # puts text in the legend 
-      #lty=c(1,1), # gives the legend appropriate symbols (lines)
-      
-      #lwd=c(2.5,2.5),col=c("blue","red")) # gives the legend lines the correct color and width
-
-
-# suicide for the original male
-
-#lines(density(final_com$suicide[final_com$female == 0]), col = "orange", lwd = 2)
-
-
-
-# suicide for the original female
-
-#lines(density(final_com$suicide[final_com$female == 1]), col = "brown", lty = "dotted", lwd = 2)
-
-
-
-# identify and store "age" for the matched treated and control groups
-#sub_abuse_suicide <- final_com$suicide[mout2_ii$index.treated]
-
-#non_sub_abuse_suicide <- final_com$suicide[mout2_ii$index.control]
-
-
-# draw the distributions
-
-#plot(density(sub_abuse_suicide),ylim = c(0, 7),col = "red", main = ("substance abuse sucide density"),legend(0.7,6,c("substance_abusers","non_substance_abusers"),lty=c(1,1),lwd=c(2.5,2.5),col=c("red","blue")))
 
 #lines(density(non_sub_abuse_suicide), col = "blue", lwd = 2)
 new_set_female<- final_com[which(final_com$female==1),]
